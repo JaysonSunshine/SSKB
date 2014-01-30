@@ -1,0 +1,6 @@
+temperature
+radiation
+light
+gamma
+vibration
+altitude

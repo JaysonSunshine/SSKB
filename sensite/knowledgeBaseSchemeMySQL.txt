@@ -1,0 +1,9 @@
+CREATE DATABASE sensite;
+
+CREATE TABLE Relations (
+	id INT NOT NULL AUTO_INCREMENT,
+	phenomena VARCHAR(255) NOT NULL,
+	sensor VARCHAR(255) NOT NULL,
+	ratio DOUBLE NOT NULL,
+	PRIMARY KEY ( id )
+	);
