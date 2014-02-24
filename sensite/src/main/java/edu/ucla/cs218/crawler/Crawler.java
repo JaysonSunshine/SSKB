@@ -1,11 +1,14 @@
 package edu.ucla.cs218.crawler;
 
+import almonds.ParseException;
 import java.util.regex.Pattern;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Crawler extends WebCrawler {
 	private static final boolean SPLIT_ON_PERIOD = true;
@@ -45,9 +48,17 @@ public class Crawler extends WebCrawler {
                     if (SPLIT_ON_PERIOD)
                     {
                     	String[] lines = textClean.split("\\.");
-                    	matcher.matchPhenomenonsAndSensorsWithText(lines);
+                        try {
+                            matcher.matchPhenomenonsAndSensorsWithText(lines);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }else{
-                    	matcher.matchPhenomenonsAndSensorsWithText(textClean);
+                        try {
+                            matcher.matchPhenomenonsAndSensorsWithText(textClean);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }  
                     try {
                     	matcher.saveStatisticsToDB();

@@ -16,7 +16,7 @@ import database.parse.tables.ParseSensor;
  * @author jried31
  */
 public class DBGlobals {
-    static public String TABLE_PHENOMENA="Phenomena";
+    static public String TABLE_PHENOMENA="PhenomenaTest";
     static public String TABLE_SENSOR="Sensor";
     
     public static void InitializeParse(){
