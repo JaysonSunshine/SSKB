@@ -10,6 +10,7 @@ import almonds.Parse;
 import almonds.ParseObject;
 import database.parse.tables.ParsePhenomena;
 import database.parse.tables.ParseSensor;
+import java.net.URI;
 
 /**
  *
@@ -18,6 +19,9 @@ import database.parse.tables.ParseSensor;
 public class DBGlobals {
     static public String TABLE_PHENOMENA="PhenomenaTest";
     static public String TABLE_SENSOR="Sensor";
+
+    public static String URL_GOOGLE_SEARCH="http://suggestqueries.google.com/complete/search?client=firefox&hl=en&q=WORD";
+    //http://clients1.google.com/complete/search?noLabels=t&client=web&q=WORD";
     
     public static void InitializeParse(){
 
