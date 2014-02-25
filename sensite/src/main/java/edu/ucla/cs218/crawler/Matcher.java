@@ -50,6 +50,10 @@ public class Matcher {
                 List<String> sensorsList        = DataHelper.getList(DataHelper.SENSORS_LIST);
                 Integer numOfOcc;
                 
+                System.out.println(text);
+                
+                //MatchFinder matchFinder = new MatchFinder();
+                //List<String> matchesFound = matchFinder.FindMatches(text);
                 
                 // USING PARSE DATABASE SENSOR LIST
                 //ParseQuery sensorQueryObject = new ParseQuery(DBGlobals.TABLE_PHENOMENA);
@@ -187,4 +191,5 @@ public class Matcher {
 		matches 		= new HashMap<String, Integer>();
 		phenomenaOccourance 	= new HashMap<String, Integer>();
 	}
+
 }

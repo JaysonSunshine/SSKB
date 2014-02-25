@@ -41,13 +41,15 @@ public class Crawler extends WebCrawler {
             if (page.getParseData() instanceof HtmlParseData) {
                     HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                     String text = htmlParseData.getText();
-                    String textClean = text.trim().replaceAll(" +", " ");;
-                    textClean = textClean.replace("\n", "").replace("\r", "").replace("\t", "");
-                    
+                    System.out.println(text);
+                    String textClean = text.trim().replaceAll("\\s+", " ");;
+                    System.out.println(textClean);
+                    textClean = textClean.replaceAll("[^0-9a-zA-Z!.?]", " ");
+                    System.out.println(textClean);
                   //Match phenomenons and sensors based in text from the website crawled
                     if (SPLIT_ON_PERIOD)
                     {
-                    	String[] lines = textClean.split("\\.");
+                    	String[] lines = textClean.split("[.?!]+");
                         try {
                             matcher.matchPhenomenonsAndSensorsWithText(lines);
                         } catch (ParseException ex) {
