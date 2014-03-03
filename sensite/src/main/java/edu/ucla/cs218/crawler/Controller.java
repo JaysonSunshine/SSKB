@@ -25,10 +25,27 @@ import edu.ucla.cs218.crawler.GoogleResults.Result;
 
 public class Controller {
 
-    private static String currentPhenomenon;
+    public static List<String> phenomenaNames;
+    public static List<String> sensorNames;
     
-    public static String getCurrentPhenomenon(){
-        return currentPhenomenon;
+    public static boolean isSensor(String s)
+    {
+        for(String sensor : sensorNames)
+        {
+            if(sensor.contains(s))
+                return true;
+        }
+        return false;
+    }
+    
+    public static boolean isPhenomenon(String p)
+    {
+        for(String phenomenon : phenomenaNames)
+        {
+            if(phenomenon.contains(p))
+                return true;
+        }
+        return false;
     }
     
     private static GoogleResults getGoogleResults(String phenomenon)
@@ -104,6 +121,21 @@ public class Controller {
         ParseQuery phenomenaQueryObject = new ParseQuery(DBGlobals.TABLE_PHENOMENA);
         List<ParseObject> phenomenaList = phenomenaQueryObject.find();
 
+        ParseQuery sensorQueryObject = new ParseQuery(DBGlobals.TABLE_SENSOR);
+        List<ParseObject> sensorList = sensorQueryObject.find();
+        
+        for (ParseObject phenomena : phenomenaList)
+        {
+            String name = phenomena.getString(ParsePhenomena.NAME);
+            phenomenaNames.add(name);
+        }
+        
+        for (ParseObject sensor : sensorList)
+        {
+            String name = sensor.getString(ParsePhenomena.NAME);
+            sensorNames.add(name);
+        }
+        
     	for (ParseObject phenomena : phenomenaList)
     	{
             String name = phenomena.getString(ParsePhenomena.NAME);

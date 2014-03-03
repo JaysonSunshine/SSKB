@@ -30,7 +30,7 @@ public class KnowledgeBaseConnector {
 	 */
 	public HashMap<String, Double> getSensors(String phenomena) throws SQLException, FileNotFoundException, IOException{
 		HashMap<String, Double> sensors 	= getSensorsList(phenomena);
-		SynonymMap map 				= new SynonymMap(new FileInputStream("/Users/Gautham/Documents/Sensite/webservice/sensite/lib/wn_s.pl"));
+		SynonymMap map 				= new SynonymMap(new FileInputStream("\\Users\\Alvin\\Documents\\GitHub\\SS\\sensite\\lib\\wn_s.pl"));
 		String[] synonyms 			= map.getSynonyms(phenomena);
 		System.out.println(phenomena + ":" + java.util.Arrays.asList(synonyms).toString());
 		

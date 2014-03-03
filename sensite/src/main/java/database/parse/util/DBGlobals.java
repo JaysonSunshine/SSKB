@@ -17,8 +17,8 @@ import java.net.URI;
  * @author jried31
  */
 public class DBGlobals {
-    static public String TABLE_PHENOMENA="PhenomenaTest";
-    static public String TABLE_SENSOR="Sensor";
+    static public String TABLE_PHENOMENA="Phenomenon test";
+    static public String TABLE_SENSOR="Sensor test";
 
     public static String URL_GOOGLE_SEARCH="http://suggestqueries.google.com/complete/search?client=firefox&hl=en&q=WORD";
     //http://clients1.google.com/complete/search?noLabels=t&client=web&q=WORD";
