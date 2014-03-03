@@ -24,7 +24,13 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.ucla.cs218.crawler.GoogleResults.Result;
 
 public class Controller {
-	
+
+    private static String currentPhenomenon;
+    
+    public static String getCurrentPhenomenon(){
+        return currentPhenomenon;
+    }
+    
     private static GoogleResults getGoogleResults(String phenomenon)
     {
         //NOTE: &start=10 --- there's a start paramater that controls paging of search results
@@ -79,7 +85,7 @@ public class Controller {
                 if (!urlToSearch.toLowerCase().contains("en.wikipedia.org".toLowerCase())){
                         controller.addSeed(urlToSearch);
                 }else{
-                        //crawler doesn't work n wikipedia
+                        //crawler doesn't work on wikipedia
                 }
             }
             /*

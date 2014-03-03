@@ -1,11 +1,15 @@
 package edu.ucla.cs218.crawler;
 
+import almonds.ParseException;
 import java.util.regex.Pattern;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import edu.uci.ics.crawler4j.parser.ParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Crawler extends WebCrawler {
 	private static final boolean SPLIT_ON_PERIOD = true;
@@ -38,16 +42,26 @@ public class Crawler extends WebCrawler {
             if (page.getParseData() instanceof HtmlParseData) {
                     HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                     String text = htmlParseData.getText();
-                    String textClean = text.trim().replaceAll(" +", " ");;
-                    textClean = textClean.replace("\n", "").replace("\r", "").replace("\t", "");
-                    
+                    System.out.println(text);
+                    String textClean = text.trim().replaceAll("\\s+", " ");;
+                    System.out.println(textClean);
+                    textClean = textClean.replaceAll("[^0-9a-zA-Z!.?]", " ");
+                    System.out.println(textClean);
                   //Match phenomenons and sensors based in text from the website crawled
                     if (SPLIT_ON_PERIOD)
                     {
-                    	String[] lines = textClean.split("\\.");
-                    	matcher.matchPhenomenonsAndSensorsWithText(lines);
+                    	String[] lines = textClean.split("[.?!]+");
+                        try {
+                            matcher.matchPhenomenonsAndSensorsWithText(lines);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }else{
-                    	matcher.matchPhenomenonsAndSensorsWithText(textClean);
+                        try {
+                            matcher.matchPhenomenonsAndSensorsWithText(textClean);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }  
                     try {
                     	matcher.saveStatisticsToDB();
