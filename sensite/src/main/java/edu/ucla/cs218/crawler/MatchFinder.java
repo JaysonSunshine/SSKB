@@ -25,6 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.codehaus.jackson.JsonFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import wordnet.wordnet;
 
 /**
  *
@@ -37,7 +38,9 @@ import org.json.JSONObject;
 */ 
 public class MatchFinder {
     
-    public List<String> FindMatches(String text) {
+    private wordnet wordNet;
+    
+    public List<String> FindMatches(String text) throws IOException {
         String splitOn = "[ ]+";                // Split on spaces
         String[] words = text.split(splitOn);   // Stores all tokenized words
         String currentWord;                     // Current word being parsed
@@ -47,28 +50,15 @@ public class MatchFinder {
         // Iterate through all words to find matches
         for(int i = 0; i < words.length; i++) {
             currentWord = words[i];
-            if(!isNoun(currentWord))
-            //   continue;
-            /*
-            * if(getMatches(currentWord, possibleMatches)) {
-            *   int pos = i+1;
-            *   if(pos < words.length) {
-            *     currentWord = currentWord + " " + words[pos];
-            *     for(String pMatch : possibleMatches) {
-            *       if(pMatch == currentWord)
-            *           matches.add(currentWord);
-            *     }
-            *   }
-            * }
-            *               ALTERNATIVELY
-            *
-            * if(getMatches(currentWord, possibleMatches)) {
-            *   for(String pMatch : possibleMatches) {
-            *       if(text.contains(pMatch))
-            *           matches.add(pMatch);
-            *   }
-            * }
-            */
+            if(!wordNet.isNoun(currentWord))
+               continue;
+            
+            if(getMatches(currentWord, possibleMatches)) {
+                for(String pMatch : possibleMatches) {
+                    if(text.contains(pMatch))
+                        matches.add(pMatch);
+                }
+            }
         }
         return matches;
     }
@@ -126,10 +116,7 @@ public class MatchFinder {
             else {
             */
             if(Controller.isSensor(word) || Controller.isPhenomenon(word))
-            {
                 possibleMatches.add(word);
-                return true;
-            }
             
             for (int k = 0; k < data.length(); k++) {
                 String term = data.getString(k);
@@ -137,8 +124,10 @@ public class MatchFinder {
                 if(Controller.isSensor(term) || Controller.isPhenomenon(term))
                     possibleMatches.add(term);
             }
+            
             if(possibleMatches.isEmpty())
                 return false;
+            
             return true;
             /* } */
         } catch (Exception ex) {

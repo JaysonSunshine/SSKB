@@ -15,7 +15,7 @@ import database.parse.util.DBGlobals;
  */
 public class ParsePhenomena extends ParseObject{
     //Column names
-    public static final String NAME = "phenomenaName";
+    public static final String NAME = "Phenomena";
 
     /**
      * Get the name object value

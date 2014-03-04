@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import database.parse.tables.ParsePhenomena;
+import database.parse.tables.ParseSensor;
 import database.parse.util.DBGlobals;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
@@ -22,17 +23,18 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.ucla.cs218.crawler.GoogleResults.Result;
+import edu.ucla.cs218.crawler.MatchFinder;
 
 public class Controller {
 
-    public static List<String> phenomenaNames;
-    public static List<String> sensorNames;
+    public static List<String> phenomenaNames = new ArrayList<String>();
+    public static List<String> sensorNames = new ArrayList<String>();
     
     public static boolean isSensor(String s)
     {
         for(String sensor : sensorNames)
         {
-            if(sensor.contains(s))
+            if(sensor.equals(s))
                 return true;
         }
         return false;
@@ -42,7 +44,7 @@ public class Controller {
     {
         for(String phenomenon : phenomenaNames)
         {
-            if(phenomenon.contains(p))
+            if(phenomenon.equals(p))
                 return true;
         }
         return false;
@@ -128,14 +130,25 @@ public class Controller {
         {
             String name = phenomena.getString(ParsePhenomena.NAME);
             phenomenaNames.add(name);
+            //System.out.println(phenomenaNames.size());
         }
         
         for (ParseObject sensor : sensorList)
         {
-            String name = sensor.getString(ParsePhenomena.NAME);
+            String name = sensor.getString(ParseSensor.NAME);
             sensorNames.add(name);
+            //System.out.println(sensorNames.size());
         }
         
+        MatchFinder match = new MatchFinder();
+        List<String> possibleMatches = new ArrayList<String>();
+        match.getMatches("altimeter", possibleMatches);
+        System.out.println("Matches Found:");
+        for(String poop : possibleMatches)
+            System.out.println(poop);
+        
+        
+        /*
     	for (ParseObject phenomena : phenomenaList)
     	{
             String name = phenomena.getString(ParsePhenomena.NAME);
@@ -158,6 +171,7 @@ public class Controller {
                 setCrawlerConfig(urlsToSearch);
             }
     		
-    	}   
+    	}
+        */
     }
 }
