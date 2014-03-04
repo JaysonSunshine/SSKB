@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 import database.parse.tables.ParsePhenomena;
@@ -27,26 +28,20 @@ import edu.ucla.cs218.crawler.MatchFinder;
 
 public class Controller {
 
-    public static List<String> phenomenaNames = new ArrayList<String>();
-    public static List<String> sensorNames = new ArrayList<String>();
+    public static HashMap<String, String> phenomenaNames = new HashMap<String, String>();
+    public static HashMap<String, String> sensorNames = new HashMap<String, String>();
     
     public static boolean isSensor(String s)
     {
-        for(String sensor : sensorNames)
-        {
-            if(sensor.equals(s))
-                return true;
-        }
+        if(sensorNames.get(s) != null)
+            return true;
         return false;
     }
     
     public static boolean isPhenomenon(String p)
     {
-        for(String phenomenon : phenomenaNames)
-        {
-            if(phenomenon.equals(p))
-                return true;
-        }
+        if(phenomenaNames.get(p) != null)
+            return true;
         return false;
     }
     
@@ -129,20 +124,20 @@ public class Controller {
         for (ParseObject phenomena : phenomenaList)
         {
             String name = phenomena.getString(ParsePhenomena.NAME);
-            phenomenaNames.add(name);
+            phenomenaNames.put(name, name);
             //System.out.println(phenomenaNames.size());
         }
         
         for (ParseObject sensor : sensorList)
         {
             String name = sensor.getString(ParseSensor.NAME);
-            sensorNames.add(name);
+            sensorNames.put(name, name);
             //System.out.println(sensorNames.size());
         }
         
         MatchFinder match = new MatchFinder();
         List<String> possibleMatches = new ArrayList<String>();
-        match.getMatches("altimeter", possibleMatches);
+        match.getMatches("rain", possibleMatches);
         System.out.println("Matches Found:");
         for(String poop : possibleMatches)
             System.out.println(poop);
