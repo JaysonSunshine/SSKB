@@ -20,6 +20,7 @@ import database.parse.util.DBGlobals;
 
 import edu.ucla.cs218.data.DataHelper;
 import edu.ucla.cs218.sensite.MongoConnector;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,13 +30,13 @@ public class Matcher {
 	private HashMap<String, Integer> matches 		= new HashMap<String, Integer>();
 	private HashMap<String, Integer> phenomenaOccourance 	= new HashMap<String, Integer>();
 	
-	public void matchPhenomenonsAndSensorsWithText(String text) throws ParseException
+	public void matchPhenomenonsAndSensorsWithText(String text) throws ParseException, IOException
 	{
 		System.out.print(".");
 		analyze(text);
 	}
 	
-	public void matchPhenomenonsAndSensorsWithText(String[] lines) throws ParseException
+	public void matchPhenomenonsAndSensorsWithText(String[] lines) throws ParseException, IOException
 	{
 		System.out.print(".");
 		for (String line : lines)
@@ -44,53 +45,42 @@ public class Matcher {
 		}
 	}
 	
-	private void analyze(String text) throws ParseException
+	private void analyze(String text) throws ParseException, IOException
 	{
-		List<String> phenomenonsList 	= DataHelper.getList(DataHelper.PHENOMENONS_LIST);
-                List<String> sensorsList        = DataHelper.getList(DataHelper.SENSORS_LIST);
-                Integer numOfOcc;
+            List<String> phenomenonsList 	= DataHelper.getList(DataHelper.PHENOMENONS_LIST);
+            List<String> sensorsList        = DataHelper.getList(DataHelper.SENSORS_LIST);
+            Integer numOfOcc;
                 
-                System.out.println(text);
+            System.out.println(text);
                 
-                //MatchFinder matchFinder = new MatchFinder();
-                //List<String> matchesFound = matchFinder.FindMatches(text);
+            MatchFinder matchFinder = new MatchFinder();
+            List<String> matchesFound = matchFinder.FindMatches(text);
                 
-                // USING PARSE DATABASE SENSOR LIST
-                //ParseQuery sensorQueryObject = new ParseQuery(DBGlobals.TABLE_PHENOMENA);
-                //List<ParseObject> sensorsList = sensorQueryObject.find();
+            if(matchesFound.isEmpty() || matchesFound.size() < 2)
+                return;
                 
-		for (String phenomena : phenomenonsList)
-		{
-			//check if phenomena is in text
-			if (text.toLowerCase().contains(phenomena))
-			{
-				int countOfPhenomenaOcc = 0;
-				if (phenomenaOccourance.get(phenomena)!=null)
-				{
-					countOfPhenomenaOcc = phenomenaOccourance.get(phenomena);
-				}
-				countOfPhenomenaOcc ++;
-				phenomenaOccourance.put(phenomena, countOfPhenomenaOcc);
-				
-				for (String sensor : sensorsList)
-				{
-					//check if sensor is in text
-                                        //String sensorName = sensor.getString(ParseSensor.NAME).toLowerCase();
-					if (text.toLowerCase().contains(sensor))
-					{
-						String match 			= phenomena+"-"+sensor;
-						numOfOcc 			= 1;					
-						//if match has occoured before, update
-						if (matches.get(match)!=null)
-						{
-							numOfOcc = matches.get(match);
-							numOfOcc += 1;
-						}
-						matches.put(match, numOfOcc);
-					}
-				}
-			}
-		}
+            for(String match : matchesFound)
+            {
+                if(Controller.isPhenomenon(match))
+                {
+                    for(String otherMatch : matchesFound)
+                    {
+                        // Don't form phenomenon-phenomenon associations
+                        if(Controller.isPhenomenon(otherMatch))
+                            continue;
+                        // Form association
+                        String association = match + "-" + otherMatch;
+                        numOfOcc = 1;
+                    if(matches.get(association) != null)
+                        {
+                            numOfOcc = matches.get(association);
+                            numOfOcc++;
+                        }
+                        matches.put(association, numOfOcc);
+                    }
+                }
+            }
+            
 	}
 	
 	public void saveStatisticsToDB() throws Exception

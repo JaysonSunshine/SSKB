@@ -8,6 +8,7 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.parser.ParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,11 +56,15 @@ public class Crawler extends WebCrawler {
                             matcher.matchPhenomenonsAndSensorsWithText(lines);
                         } catch (ParseException ex) {
                             Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }else{
                         try {
                             matcher.matchPhenomenonsAndSensorsWithText(textClean);
                         } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
                             Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }  

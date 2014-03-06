@@ -30,6 +30,7 @@ public class Controller {
 
     public static HashMap<String, String> phenomenaNames = new HashMap<String, String>();
     public static HashMap<String, String> sensorNames = new HashMap<String, String>();
+    //public static ParseHandler PH = new ParseHandler();
     
     public static boolean isSensor(String s)
     {
@@ -112,15 +113,20 @@ public class Controller {
     static String []searchTerms = {"? measurement instrument", "how to measure ?"};
     public static void main(String[] args) throws Exception {
     	
+        /*
+        PARSE HANDLER SETUP HERE
+        */
+        
         //THIS MUST BE CALLED ONCE in order to register the Parse objects and initialize the DB
         DBGlobals.InitializeParse();
         
+        
+        // GET PARSE PHENOMENA TABLE
+        // PH.getPhenomenaTable(phenomenaNames);
         ParseQuery phenomenaQueryObject = new ParseQuery(DBGlobals.TABLE_PHENOMENA);
+        phenomenaQueryObject.setLimit(1000);
         List<ParseObject> phenomenaList = phenomenaQueryObject.find();
 
-        ParseQuery sensorQueryObject = new ParseQuery(DBGlobals.TABLE_SENSOR);
-        List<ParseObject> sensorList = sensorQueryObject.find();
-        
         for (ParseObject phenomena : phenomenaList)
         {
             String name = phenomena.getString(ParsePhenomena.NAME);
@@ -128,12 +134,22 @@ public class Controller {
             //System.out.println(phenomenaNames.size());
         }
         
+        // END PARSE PHENOMENON TABLE
+        
+        // GET PARSE SENSOR TABLE
+        // PH.getSensorTable(sensorNames);
+        ParseQuery sensorQueryObject = new ParseQuery(DBGlobals.TABLE_SENSOR);
+        sensorQueryObject.setLimit(1000);
+        List<ParseObject> sensorList = sensorQueryObject.find();
+        
         for (ParseObject sensor : sensorList)
         {
             String name = sensor.getString(ParseSensor.NAME);
             sensorNames.put(name, name);
             //System.out.println(sensorNames.size());
         }
+        
+        // END PARSE SENSOR TABLE
         
         MatchFinder match = new MatchFinder();
         List<String> possibleMatches = new ArrayList<String>();
