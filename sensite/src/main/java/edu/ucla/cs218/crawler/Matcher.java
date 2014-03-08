@@ -14,6 +14,8 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import database.parse.tables.ParseSensor;
 import database.parse.util.DBGlobals;
@@ -86,16 +88,40 @@ public class Matcher {
 	public void saveStatisticsToDB() throws Exception
 	{
 		// Get Database Handle
-		//DB db = MongoConnector.getDatabase();
-            
+		DB db = MongoConnector.getDatabase();
+                DBCollection associations = db.getCollection("associations");
+                
+                
 		if (!matches.isEmpty()){
 			for (String key : matches.keySet())
 			{
 				List<String> keys 		= Arrays.asList(key.split("\\-"));
-				String phenomena 		= keys.get(0);
+				String phenomenon 		= keys.get(0);
 				String sensor 			= keys.get(1);
 				int matchCount			= matches.get(key);
 				
+                                DBCursor cursor;
+                                BasicDBObject query = new BasicDBObject("phenomenon", phenomenon).
+                                      append("sensor", sensor);
+                                cursor = associations.find(query);
+                                //  ADDING CODE
+                                
+                                /*
+                                if(!isInDatabase(phenomena-sensor))
+                                {
+                                    addToDatabase(phenomena-sensor, frequency);
+                                    continue;
+                                }
+                                
+                                curFrequency = getFromDatabase(phenomena-sensor);
+                                addToDatabase(phenomena-sensor, freqeuncy+curFrequency);
+                                */
+                                
+                                //
+                                
+                                
+                                
+                                
                                 /*
 				// If phenomenon doesn't exist, insert new
 				//BasicDBList newSensorsList = new BasicDBList();
