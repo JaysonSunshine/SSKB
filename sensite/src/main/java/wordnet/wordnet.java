@@ -21,6 +21,7 @@ import java.lang.System.*;
  */
 
 public class wordnet {
+    public static WordNetDatabase database = WordNetDatabase.getFileInstance();
     
     public static void main(String[] args) throws IOException{
         System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict"); 
@@ -48,7 +49,7 @@ public class wordnet {
 
         //File file = new File("index.sense");
         //System.out.println(file.getCanonicalPath());
-        WordNetDatabase database = WordNetDatabase.getFileInstance();
+        
         Synset[] synsets = database.getSynsets(word, SynsetType.NOUN , false);
         
         //System.out.println(synsets.length);
@@ -69,7 +70,7 @@ public class wordnet {
 
         //File file = new File("index.sense");
         //System.out.println(file.getCanonicalPath());
-        WordNetDatabase database = WordNetDatabase.getFileInstance();
+        //WordNetDatabase database = WordNetDatabase.getFileInstance();
         Synset[] synsets = database.getSynsets(word, SynsetType.ADJECTIVE , false);
         
         //System.out.println(synsets.length);
