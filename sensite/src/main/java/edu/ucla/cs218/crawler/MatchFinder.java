@@ -38,7 +38,7 @@ import wordnet.wordnet;
 */ 
 public class MatchFinder {
     
-    private wordnet wordNet;
+    //private wordnet wordNet;
     
     public List<String> FindMatches(String text) throws IOException {
         String splitOn = "[ ]+";                // Split on spaces
@@ -46,17 +46,27 @@ public class MatchFinder {
         String currentWord;                     // Current word being parsed
         List<String> possibleMatches = new ArrayList<String>();        // Stores matches found by autocomplete
         List<String> matches = new ArrayList<String>();                // Stores found matches
-        
-        // Iterate through all words to find matches
-        for(int i = 0; i < words.length; i++) {
-            currentWord = words[i];
+        for (String word : words) {
+            currentWord = word.toLowerCase();
+            
+            // WORD NET INTEGRATION DOES NOT WORK
+            /*
             if(!wordNet.isNoun(currentWord))
-               continue;
+            {
+                System.out.println("NOT A NOUN: " + currentWord);
+                continue;
+            }
+            */
             
             if(getMatches(currentWord, possibleMatches)) {
+                System.out.println("there are matches");
                 for(String pMatch : possibleMatches) {
+                    System.out.println(pMatch);
                     if(text.contains(pMatch))
+                    {
+                        System.out.println(pMatch);
                         matches.add(pMatch);
+                    }
                 }
             }
         }
@@ -101,7 +111,7 @@ public class MatchFinder {
             //Get the bag of words: NOTE - Index 0 = search term | Index 1 = bag of words
             //We want the bag of words
             data = data.getJSONArray(1);
-            System.out.println(data);
+            //System.out.println(data);
             
             /*First, validate whether the search term matches...If no match then run though the bag of words
             Basically my point is query for the Search term 1st to see if it matches a Sensor or Phenomena
@@ -120,7 +130,7 @@ public class MatchFinder {
             
             for (int k = 0; k < data.length(); k++) {
                 String term = data.getString(k);
-                System.out.println(term);
+                //System.out.println(term);
                 if(Controller.isSensor(term) || Controller.isPhenomenon(term))
                     possibleMatches.add(term);
             }
@@ -149,14 +159,14 @@ public class MatchFinder {
         return false;
     }
     
-    public static void main(String []art){
+    /*public static void main(String []art){
         MatchFinder match = new MatchFinder();
         List<String> possibleMatches = new ArrayList<String>();
         match.getMatches("temperature", possibleMatches);
         for(String poop : possibleMatches)
             System.out.println(poop);
         
-    }
+    }*/
 }
 
 

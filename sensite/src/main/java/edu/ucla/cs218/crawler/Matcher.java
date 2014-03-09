@@ -25,6 +25,7 @@ import edu.ucla.cs218.sensite.MongoConnector;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import edu.ucla.cs218.crawler.MatchFinder;
 
 public class Matcher {
 	private ResultSet resultSet;
@@ -49,18 +50,21 @@ public class Matcher {
 	
 	private void analyze(String text) throws ParseException, IOException
 	{
-            List<String> phenomenonsList 	= DataHelper.getList(DataHelper.PHENOMENONS_LIST);
-            List<String> sensorsList        = DataHelper.getList(DataHelper.SENSORS_LIST);
+            //List<String> phenomenonsList 	= DataHelper.getList(DataHelper.PHENOMENONS_LIST);
+            //List<String> sensorsList        = DataHelper.getList(DataHelper.SENSORS_LIST);
             Integer numOfOcc;
                 
-            System.out.println(text);
-                
+            //System.out.println(text);
+            
             MatchFinder matchFinder = new MatchFinder();
             List<String> matchesFound = matchFinder.FindMatches(text);
                 
             if(matchesFound.isEmpty() || matchesFound.size() < 2)
+            {
+                System.out.println("no matches");
                 return;
-                
+            }
+            System.out.println("HAS MATCHES");
             for(String match : matchesFound)
             {
                 if(Controller.isPhenomenon(match))
@@ -72,6 +76,7 @@ public class Matcher {
                             continue;
                         // Form association
                         String association = match + "-" + otherMatch;
+                        System.out.println(association);
                         numOfOcc = 1;
                     if(matches.get(association) != null)
                         {
@@ -171,7 +176,7 @@ public class Matcher {
                                 
 				//double ratio = totalNumberMatches/(double)totalNumberPhenomenaOcc;
 				//String ratioString = new DecimalFormat("##.##").format(ratio*100);
-				System.out.println("\nSensor: '"+sensor+"' have matched phenomena :'"+phenomena+"' with frequency: "+matchCount+" %");
+				//System.out.println("\nSensor: '"+sensor+"' have matched phenomena :'"+phenomena+"' with frequency: "+matchCount+" %");
 			}
 		}
 		

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
+import com.mongodb.*;
 import database.parse.tables.ParsePhenomena;
 import database.parse.tables.ParseSensor;
 import database.parse.util.DBGlobals;
@@ -25,6 +26,8 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.ucla.cs218.crawler.GoogleResults.Result;
 import edu.ucla.cs218.crawler.MatchFinder;
+import edu.ucla.cs218.sensite.JSONParser;
+import edu.ucla.cs218.sensite.MongoConnector;
 
 public class Controller {
 
@@ -74,7 +77,7 @@ public class Controller {
 	private static void setCrawlerConfig(List<String> urlsToSearch) throws Exception
 	{
             String crawlStorageFolder 	= "data/crawl/root";
-            int numberOfCrawlers 		= 10;//Crawling 10 pages at a time cause thats how many search results return
+            int numberOfCrawlers 		= 1;//Crawling 10 pages at a time cause thats how many search results return
             int maxDepthOfCrawling 		= 1;//Crawl only the top webpage
     //        int maxPagesToFetch			= 100;
         
@@ -118,57 +121,54 @@ public class Controller {
         */
         
         //THIS MUST BE CALLED ONCE in order to register the Parse objects and initialize the DB
-        DBGlobals.InitializeParse();
+        DB db = MongoConnector.getDatabase();
+        DBCollection phenomena = db.getCollection("phenomena");
+        DBCollection sensors = db.getCollection("sensors");
+        DBCursor cursor;
+        //BasicDBObject query = new BasicDBObject("phenomenon", phenomenon).
+        //                              append("sensor", sensor);
         
-        
-        // GET PARSE PHENOMENA TABLE
-        // PH.getPhenomenaTable(phenomenaNames);
-        ParseQuery phenomenaQueryObject = new ParseQuery(DBGlobals.TABLE_PHENOMENA);
-        phenomenaQueryObject.setLimit(1000);
-        List<ParseObject> phenomenaList = phenomenaQueryObject.find();
-
-        for (ParseObject phenomena : phenomenaList)
-        {
-            String name = phenomena.getString(ParsePhenomena.NAME);
-            phenomenaNames.put(name, name);
-            //System.out.println(phenomenaNames.size());
+        cursor = phenomena.find();
+        try {
+            while(cursor.hasNext()) {
+                DBObject phenomenon = cursor.next();
+                String name = (String) phenomenon.get("phenomena");
+                phenomenaNames.put(name, name);
+            }
+        } finally {
+            cursor.close();
         }
+        cursor = sensors.find();
+        try {
+            while(cursor.hasNext()) {
+                DBObject sensor = cursor.next();
+                String name = (String) sensor.get("sensor");
+                sensorNames.put(name, name);
+            }
+        } finally {
+            cursor.close();
+        }      
         
-        // END PARSE PHENOMENON TABLE
-        
-        // GET PARSE SENSOR TABLE
-        // PH.getSensorTable(sensorNames);
-        ParseQuery sensorQueryObject = new ParseQuery(DBGlobals.TABLE_SENSOR);
-        sensorQueryObject.setLimit(1000);
-        List<ParseObject> sensorList = sensorQueryObject.find();
-        
-        for (ParseObject sensor : sensorList)
-        {
-            String name = sensor.getString(ParseSensor.NAME);
-            sensorNames.put(name, name);
-            //System.out.println(sensorNames.size());
-        }
-        
-        // END PARSE SENSOR TABLE
-        
-        MatchFinder match = new MatchFinder();
-        List<String> possibleMatches = new ArrayList<String>();
-        match.getMatches("rain", possibleMatches);
-        System.out.println("Matches Found:");
-        for(String poop : possibleMatches)
-            System.out.println(poop);
+        cursor = sensors.find();
+        try {
+            while(cursor.hasNext()) {
+                DBObject sensor = cursor.next();
+                String name = (String) sensor.get("sensor");
+                sensorNames.put(name, name);
+            }
+        } finally {
+            cursor.close();
+        }      
         
         
-        /*
-    	for (ParseObject phenomena : phenomenaList)
+    	for (String phenomenon : phenomenaNames.values())
     	{
-            String name = phenomena.getString(ParsePhenomena.NAME);
-            System.out.println("Phenomena: " + name);
+            System.out.println("Phenomena: " + phenomenon);
                 
             //Query for each search term
             for(String searchterm : searchTerms ){
-                System.out.println("Search Term: "+searchterm.replace("?", name));
-    		GoogleResults results = getGoogleResults(searchterm.replace("?", name));
+                System.out.println("Search Term: "+searchterm.replace("?", phenomenon));
+    		GoogleResults results = getGoogleResults(searchterm.replace("?", phenomenon));
     		List<Result> resultList = results.getResponseData().getResults();
                 
     		List<String> urlsToSearch = new ArrayList<String>();
@@ -183,6 +183,6 @@ public class Controller {
             }
     		
     	}
-        */
+        
     }
 }
