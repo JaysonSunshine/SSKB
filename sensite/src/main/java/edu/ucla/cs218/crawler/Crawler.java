@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class Crawler extends WebCrawler {
 	private static final boolean SPLIT_ON_PERIOD = true;
-	private static Matcher matcher = new Matcher();
+	private Matcher matcher = new Matcher();
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" 
                                                       + "|png|tiff?|mid|mp2|mp3|mp4"
                                                       + "|wav|avi|mov|mpeg|ram|m4v|pdf" 
@@ -74,6 +74,7 @@ public class Crawler extends WebCrawler {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+                            
             }
     }
 }

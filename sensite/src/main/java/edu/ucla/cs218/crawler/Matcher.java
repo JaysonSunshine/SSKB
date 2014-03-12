@@ -16,6 +16,7 @@ import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import database.parse.tables.ParseSensor;
 import database.parse.util.DBGlobals;
@@ -44,7 +45,8 @@ public class Matcher {
 		System.out.print(".");
 		for (String line : lines)
 		{
-			analyze(line);
+                    line = line.trim();
+                    analyze(line);
 		}
 	}
 	
@@ -61,10 +63,10 @@ public class Matcher {
                 
             if(matchesFound.isEmpty() || matchesFound.size() < 2)
             {
-                System.out.println("no matches");
+                //System.out.println("no matches");
                 return;
             }
-            System.out.println("HAS MATCHES");
+            //System.out.println("HAS MATCHES");
             for(String match : matchesFound)
             {
                 if(Controller.isPhenomenon(match))
@@ -92,25 +94,62 @@ public class Matcher {
 	
 	public void saveStatisticsToDB() throws Exception
 	{
-		// Get Database Handle
-		DB db = MongoConnector.getDatabase();
-                DBCollection associations = db.getCollection("associations");
+            // Get Database Handle
+            DB db = MongoConnector.getDatabase();
+            DBCollection associations = db.getCollection("associations");
+            int flag = 0;
                 
-                
-		if (!matches.isEmpty()){
-			for (String key : matches.keySet())
-			{
-				List<String> keys 		= Arrays.asList(key.split("\\-"));
-				String phenomenon 		= keys.get(0);
-				String sensor 			= keys.get(1);
-				int matchCount			= matches.get(key);
-				
-                                DBCursor cursor;
-                                BasicDBObject query = new BasicDBObject("phenomenon", phenomenon).
-                                      append("sensor", sensor);
-                                cursor = associations.find(query);
-                                //  ADDING CODE
+            if (!matches.isEmpty()){
+                for (String key : matches.keySet())
+                {
+                    List<String> keys 		= Arrays.asList(key.split("\\-"));
+                    String phenomenon 		= keys.get(0);
+                    String sensor 			= keys.get(1);
+                    int frequency			= matches.get(key);
                                 
+                    //  ADDING CODE
+                    //while adding
+                    DBCursor cursor;
+                    BasicDBObject query = new BasicDBObject("phenomenon", phenomenon).
+                                      append("sensor", sensor);
+                    cursor = associations.find(query);
+                    if(cursor.hasNext())
+                    {
+                        DBObject result = cursor.next();
+                        frequency += (Integer) result.get("frequency");
+                        BasicDBObject update = new BasicDBObject("phenomenon", phenomenon).append("sensor", sensor)
+                                .append("frequency", frequency);
+                        associations.update(query, update);
+                    }
+                    else
+                    {
+                        BasicDBObject newAssociation = new BasicDBObject("phenomenon", phenomenon).append("sensor", sensor)
+                                .append("frequency", frequency);
+                        associations.insert(newAssociation);
+                    }
+                }
+                    /*
+                    DBCursor curs = associations.find();
+                    if(curs.hasNext()) {
+                        DBObject o = curs.next();
+                        String phen = (String) o.get("phenomenon") ; 
+                        String sens = (String) o.get("sensor") ; 
+                        if(phen.equals(phenomenon) && sens.equals(sensor))
+                        {
+                   
+                            flag = 1;
+                            BasicDBObject set = new BasicDBObject("phenomenon", phen).append("sensor", sens).append("$inc", new BasicDBObject("frequency", frequency));
+                            associations.update(curs.curr(), set);
+                        }
+                    }
+
+                                
+                                
+                    if(flag ==0) {   
+                        BasicDBObject query2 = new BasicDBObject("phenomenon", phenomenon).append("sensor", sensor).append("frequency", frequency);
+                    }
+                    */
+        
                                 /*
                                 if(!isInDatabase(phenomena-sensor))
                                 {
@@ -172,14 +211,14 @@ public class Matcher {
                 // DATABASE ADD, IGNORE FOR NOW
                 /*
 		if (!phenomenaOccourance.isEmpty()){", new BasicDBObject("sensors.$.count", matchCount)));
-				*/
+				
                                 
 				//double ratio = totalNumberMatches/(double)totalNumberPhenomenaOcc;
 				//String ratioString = new DecimalFormat("##.##").format(ratio*100);
 				//System.out.println("\nSensor: '"+sensor+"' have matched phenomena :'"+phenomena+"' with frequency: "+matchCount+" %");
 			}
 		}
-		
+		*/
                 // DATABASE ADD, IGNORE FOR NOW
                 /*
 		if (!phenomenaOccourance.isEmpty()){
@@ -212,5 +251,5 @@ public class Matcher {
 		matches 		= new HashMap<String, Integer>();
 		phenomenaOccourance 	= new HashMap<String, Integer>();
 	}
-
+    }
 }

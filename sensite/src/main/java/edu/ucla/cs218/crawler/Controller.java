@@ -77,7 +77,7 @@ public class Controller {
 	private static void setCrawlerConfig(List<String> urlsToSearch) throws Exception
 	{
             String crawlStorageFolder 	= "data/crawl/root";
-            int numberOfCrawlers 		= 1;//Crawling 10 pages at a time cause thats how many search results return
+            int numberOfCrawlers 		= 10;//Crawling 10 pages at a time cause thats how many search results return
             int maxDepthOfCrawling 		= 1;//Crawl only the top webpage
     //        int maxPagesToFetch			= 100;
         

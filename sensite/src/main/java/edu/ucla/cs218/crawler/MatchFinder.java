@@ -38,8 +38,24 @@ import wordnet.wordnet;
 */ 
 public class MatchFinder {
     
-    //private wordnet wordNet;
+    private wordnet wordNet = new wordnet();
     
+    public List<String> FindMatches(String text) {
+        List<String> matches = new ArrayList<String>();
+        for(String phenomenon : Controller.phenomenaNames.values())
+        {
+            if(text.contains(phenomenon))
+                matches.add(phenomenon);
+        }
+        for(String sensor : Controller.sensorNames.values())
+        {
+            if(text.contains(sensor))
+                matches.add(sensor);
+        }
+        return matches;
+    }
+    
+    /*
     public List<String> FindMatches(String text) throws IOException {
         String splitOn = "[ ]+";                // Split on spaces
         String[] words = text.split(splitOn);   // Stores all tokenized words
@@ -50,13 +66,18 @@ public class MatchFinder {
             currentWord = word.toLowerCase();
             
             // WORD NET INTEGRATION DOES NOT WORK
-            /*
-            if(!wordNet.isNoun(currentWord))
+            
+            try {
+            if(!(wordNet.isNoun(currentWord) || wordNet.isAdjective(currentWord)))
             {
-                System.out.println("NOT A NOUN: " + currentWord);
+                System.out.println("NOT A NOUN/ADJECTIVE: " + currentWord);
                 continue;
             }
-            */
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            
             
             if(getMatches(currentWord, possibleMatches)) {
                 System.out.println("there are matches");
@@ -72,6 +93,7 @@ public class MatchFinder {
         }
         return matches;
     }
+    */
     
     public boolean getMatches(String word, List<String> possibleMatches ) {
         possibleMatches.clear();
@@ -79,8 +101,15 @@ public class MatchFinder {
             JSONArray data = null;
             InputStream iStream = null;
             HttpURLConnection urlConnection = null;
+        
             
+       // GOOGLE AUTOCOMPLETE CODE: TO DO
+       // Necessary for scaling if phenomenon and sensor lists
+       // become too extensive.  Checks if word or top 10 google
+       // autocomplete results are phenomena or sensors.
+       
         try {
+            //Thread.sleep(1000); // DELAY FOR 
             String str = DBGlobals.URL_GOOGLE_SEARCH.replace("WORD", word);
             URL url = new URL(str);
             
@@ -125,6 +154,7 @@ public class MatchFinder {
             if(word == PHENOMENA | SENSOR) {Do somethign here}
             else {
             */
+            
             if(Controller.isSensor(word) || Controller.isPhenomenon(word))
                 possibleMatches.add(word);
             
@@ -145,17 +175,6 @@ public class MatchFinder {
             ex.printStackTrace();
         }
         
-        
-        
-        /*      GOOGLE AUTOCOMPLETE CODE
-        * TAKE FIRST 3 AUTOCOMPLETE WORDS FOR THE WORD INPUT AND ADD TO MATCHES
-        * autocomplete(word, matches);
-        *
-        *       WORDNET MATCHES
-        * USE MATCHES FOUND BY GOOGLE AUTOCOMPLETE AND ADD MATCHES FOUND BY
-        * WORDNET USING THOSE MATCHES
-        * wordnet(matches);
-        */
         return false;
     }
     
