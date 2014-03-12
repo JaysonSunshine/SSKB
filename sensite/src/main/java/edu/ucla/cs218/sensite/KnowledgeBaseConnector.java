@@ -13,6 +13,7 @@ import org.apache.lucene.wordnet.SynonymMap;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +29,13 @@ public class KnowledgeBaseConnector {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public HashMap<String, Double> getSensors(String phenomena) throws SQLException, FileNotFoundException, IOException{
-		HashMap<String, Double> sensors 	= getSensorsList(phenomena);
-		SynonymMap map 				= new SynonymMap(new FileInputStream("\\Users\\Alvin\\Documents\\GitHub\\SS\\sensite\\lib\\wn_s.pl"));
-		String[] synonyms 			= map.getSynonyms(phenomena);
-		System.out.println(phenomena + ":" + java.util.Arrays.asList(synonyms).toString());
+	public HashMap<String, Integer> getSensors(String phenomena) throws SQLException, FileNotFoundException, IOException{
+		HashMap<String, Integer> sensors 	= getSensorsList(phenomena);
+		//SynonymMap map 				= new SynonymMap(new FileInputStream("\\Users\\Alvin\\Documents\\GitHub\\SS\\sensite\\lib\\wn_s.pl"));
+		//String[] synonyms 			= map.getSynonyms(phenomena);
+		//System.out.println(phenomena + ":" + java.util.Arrays.asList(synonyms).toString());
 		
+                /*
 		if (sensors.isEmpty())
 		{
 			System.out.println("No match in knowledgebase.");
@@ -52,16 +54,29 @@ public class KnowledgeBaseConnector {
 				}
 			}
 		}
+                */
 		return sensors;
 	}
 	
-	private HashMap<String, Double> getSensorsList(String phenomena) throws SQLException
+	private HashMap<String, Integer> getSensorsList(String phenomena) throws SQLException
 	{
 		// Get Database Handle
 		DB db = MongoConnector.getDatabase();
 		
-		DBObject result = db.getCollection("Phenomena").findOne(new BasicDBObject("phenomenaName", phenomena));
+                HashMap<String, Integer> outArray = new HashMap<String, Integer>();
+                
+                
+		DBCursor result = db.getCollection("associations").find(new BasicDBObject("phenomenon", phenomena));
 		
+                while(result.hasNext())
+                {
+                    DBObject o = result.next();
+                    String sensor = (String) o.get("sensor");
+                    int frequency = (Integer) o.get("frequency");
+                    outArray.put(sensor, frequency);
+                }
+                
+                /*
 		if (result == null)
 			return null;
 		
@@ -74,6 +89,7 @@ public class KnowledgeBaseConnector {
                         ((BasicDBObject)sensor).getDouble("count") / ((BasicDBObject)result).getDouble("count") * 100
                     );
                 }
+                */
 		return outArray;
 		
 		/*
