@@ -31,10 +31,11 @@ import edu.ucla.cs218.sensite.MongoConnector;
 
 public class Controller {
 
+    //These global variables store the lists of phenomenon and sensor names
     public static HashMap<String, String> phenomenaNames = new HashMap<String, String>();
     public static HashMap<String, String> sensorNames = new HashMap<String, String>();
-    //public static ParseHandler PH = new ParseHandler();
     
+    //Checks if a given string is in the sensor list
     public static boolean isSensor(String s)
     {
         if(sensorNames.get(s) != null)
@@ -42,6 +43,7 @@ public class Controller {
         return false;
     }
     
+    //Checks if a given string is in the phenomenon list
     public static boolean isPhenomenon(String p)
     {
         if(phenomenaNames.get(p) != null)
@@ -49,6 +51,7 @@ public class Controller {
         return false;
     }
     
+    //Used to get google results
     private static GoogleResults getGoogleResults(String phenomenon)
     {
         //NOTE: &start=10 --- there's a start paramater that controls paging of search results
@@ -125,9 +128,8 @@ public class Controller {
         DBCollection phenomena = db.getCollection("phenomena");
         DBCollection sensors = db.getCollection("sensors");
         DBCursor cursor;
-        //BasicDBObject query = new BasicDBObject("phenomenon", phenomenon).
-        //                              append("sensor", sensor);
         
+        //Fill phenomenon list
         cursor = phenomena.find();
         try {
             while(cursor.hasNext()) {
@@ -138,6 +140,8 @@ public class Controller {
         } finally {
             cursor.close();
         }
+        
+        //Fill sensor list
         cursor = sensors.find();
         try {
             while(cursor.hasNext()) {
@@ -147,20 +151,9 @@ public class Controller {
             }
         } finally {
             cursor.close();
-        }      
+        }
         
-        cursor = sensors.find();
-        try {
-            while(cursor.hasNext()) {
-                DBObject sensor = cursor.next();
-                String name = (String) sensor.get("sensor");
-                sensorNames.put(name, name);
-            }
-        } finally {
-            cursor.close();
-        }      
-        
-        
+        //Query for each phenomenon and get the URLs
     	for (String phenomenon : phenomenaNames.values())
     	{
             System.out.println("Phenomena: " + phenomenon);

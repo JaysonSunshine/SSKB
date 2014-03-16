@@ -38,8 +38,11 @@ import wordnet.wordnet;
 */ 
 public class MatchFinder {
     
+    //Initialize wordnet
     private wordnet wordNet = new wordnet();
-    
+        
+    //Takes a sentence as input, and returns a list of the phenomena and sensors
+    //contained in the sentence.
     public List<String> FindMatches(String text) {
         List<String> matches = new ArrayList<String>();
         for(String phenomenon : Controller.phenomenaNames.values())
@@ -55,6 +58,12 @@ public class MatchFinder {
         return matches;
     }
     
+    
+    // This version of FindMatches functions the same as the one above.
+    // The difference is the way it finds matches.  This is the scalable version.
+    // This is not currently used due to google IP blocking the application because
+    // it makes too many queries.
+    
     /*
     public List<String> FindMatches(String text) throws IOException {
         String splitOn = "[ ]+";                // Split on spaces
@@ -62,11 +71,11 @@ public class MatchFinder {
         String currentWord;                     // Current word being parsed
         List<String> possibleMatches = new ArrayList<String>();        // Stores matches found by autocomplete
         List<String> matches = new ArrayList<String>();                // Stores found matches
+    
         for (String word : words) {
             currentWord = word.toLowerCase();
             
-            // WORD NET INTEGRATION DOES NOT WORK
-            
+            //Check if current word is an adjective or a noun, otherwise skip
             try {
             if(!(wordNet.isNoun(currentWord) || wordNet.isAdjective(currentWord)))
             {
@@ -78,9 +87,8 @@ public class MatchFinder {
                 e.printStackTrace();
             }
             
-            
+            //Check if sentence contains matches based on the current word.
             if(getMatches(currentWord, possibleMatches)) {
-                System.out.println("there are matches");
                 for(String pMatch : possibleMatches) {
                     System.out.println(pMatch);
                     if(text.contains(pMatch))
@@ -103,13 +111,13 @@ public class MatchFinder {
             HttpURLConnection urlConnection = null;
         
             
-       // GOOGLE AUTOCOMPLETE CODE: TO DO
+       // GOOGLE AUTOCOMPLETE CODE:
        // Necessary for scaling if phenomenon and sensor lists
        // become too extensive.  Checks if word or top 10 google
        // autocomplete results are phenomena or sensors.
        
         try {
-            //Thread.sleep(1000); // DELAY FOR 
+            //Thread.sleep(1000); // DELAY SO GOOGLE DOES NOT BLOCK?
             String str = DBGlobals.URL_GOOGLE_SEARCH.replace("WORD", word);
             URL url = new URL(str);
             
@@ -134,7 +142,7 @@ public class MatchFinder {
             iStream.close();
             urlConnection.disconnect();
             
-            //Convert the String array to a JSON array
+            //Convert the String array to a JSON array stores first 10 results
             data =  new JSONArray(sb.toString());
             
             //Get the bag of words: NOTE - Index 0 = search term | Index 1 = bag of words
@@ -155,9 +163,11 @@ public class MatchFinder {
             else {
             */
             
+            //Check if word itself is a sensor or phenomenon
             if(Controller.isSensor(word) || Controller.isPhenomenon(word))
                 possibleMatches.add(word);
             
+            //Check if autocomplete results are sensors or phenomena
             for (int k = 0; k < data.length(); k++) {
                 String term = data.getString(k);
                 //System.out.println(term);
@@ -177,15 +187,7 @@ public class MatchFinder {
         
         return false;
     }
-    
-    /*public static void main(String []art){
-        MatchFinder match = new MatchFinder();
-        List<String> possibleMatches = new ArrayList<String>();
-        match.getMatches("temperature", possibleMatches);
-        for(String poop : possibleMatches)
-            System.out.println(poop);
-        
-    }*/
+
 }
 
 
