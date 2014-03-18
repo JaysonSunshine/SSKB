@@ -23,32 +23,12 @@ import java.lang.System.*;
 public class wordnet {
     public static WordNetDatabase database = WordNetDatabase.getFileInstance();
     
-    public static void main(String[] args) throws IOException{
-        System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict"); 
-        wordnet test = new wordnet();
-        test.isNoun("is");
-        test.isNoun("dog");
-        test.isNoun("explode");
-        test.isNoun("run");
-        test.isNoun("radiation");
-        test.isAdjective("is");
-        test.isAdjective("dog");
-        test.isAdjective("explode");
-        test.isAdjective("run");
-        test.isAdjective("radiation");
-        test.isAdjective("atmospheric");
-
-
+    public wordnet() {
+        System.setProperty("wordnet.database.dir", "C:\\Program Files (x86)\\WordNet\\2.1\\dict");
     }
     
-    //
     
     public boolean isNoun(String word) throws IOException{
-        //SynsetType object;
-        //System.out.println("#############");
-
-        //File file = new File("index.sense");
-        //System.out.println(file.getCanonicalPath());
         
         Synset[] synsets = database.getSynsets(word, SynsetType.NOUN , false);
         
@@ -62,15 +42,10 @@ public class wordnet {
             return true;
         }
 
-        }
+    }
     
     public boolean isAdjective(String word) throws IOException{
-        //SynsetType object;
-        //System.out.println("#############");
-
-        //File file = new File("index.sense");
-        //System.out.println(file.getCanonicalPath());
-        //WordNetDatabase database = WordNetDatabase.getFileInstance();
+        
         Synset[] synsets = database.getSynsets(word, SynsetType.ADJECTIVE , false);
         
         //System.out.println(synsets.length);
@@ -83,6 +58,6 @@ public class wordnet {
             return true;
         }
 
-        }
+    }
     
 }
