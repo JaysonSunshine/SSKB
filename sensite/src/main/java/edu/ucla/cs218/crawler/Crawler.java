@@ -1,15 +1,20 @@
 package edu.ucla.cs218.crawler;
 
+import almonds.ParseException;
 import java.util.regex.Pattern;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import edu.uci.ics.crawler4j.parser.ParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Crawler extends WebCrawler {
 	private static final boolean SPLIT_ON_PERIOD = true;
-	private static Matcher matcher = new Matcher();
+	private Matcher matcher = new Matcher();
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" 
                                                       + "|png|tiff?|mid|mp2|mp3|mp4"
                                                       + "|wav|avi|mov|mpeg|ram|m4v|pdf" 
@@ -38,22 +43,38 @@ public class Crawler extends WebCrawler {
             if (page.getParseData() instanceof HtmlParseData) {
                     HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                     String text = htmlParseData.getText();
-                    String textClean = text.trim().replaceAll(" +", " ");;
-                    textClean = textClean.replace("\n", "").replace("\r", "").replace("\t", "");
                     
-                  //Match phenomenons and sensors based in text from the website crawled
+                    // Clean and format the text
+                    String textClean = text.trim().replaceAll("\\s+", " ");
+                    textClean = textClean.replaceAll("[^0-9a-zA-Z!.?'\\-]", " ");
+                    textClean = textClean.replaceAll("\\s+", " ");
+
+                    //Match phenomenons and sensors based in text from the website crawled
                     if (SPLIT_ON_PERIOD)
                     {
-                    	String[] lines = textClean.split("\\.");
-                    	matcher.matchPhenomenonsAndSensorsWithText(lines);
+                    	String[] lines = textClean.split("[.?!]+");
+                        try {
+                            matcher.matchPhenomenonsAndSensorsWithText(lines);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }else{
-                    	matcher.matchPhenomenonsAndSensorsWithText(textClean);
+                        try {
+                            matcher.matchPhenomenonsAndSensorsWithText(textClean);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }  
                     try {
                     	matcher.saveStatisticsToDB();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+                            
             }
     }
 }

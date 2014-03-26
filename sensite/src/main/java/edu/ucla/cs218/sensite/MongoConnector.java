@@ -9,7 +9,7 @@ public class MongoConnector {
 	static public DB getDatabase() {
 		if (db == null)
 			try {
-				db = new MongoClient(new MongoClientURI("mongodb://sensite:sensite@ds053188.mongolab.com:53188/sensite")).getDB("sensite");
+				db = new MongoClient(new MongoClientURI("mongodb://sensite130:sensite130@ds033699.mongolab.com:33699/sensite")).getDB("sensite");
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			}

@@ -1,0 +1,322 @@
+sensors
+accelerometer
+actigraphy
+actinometer
+active pixel sensor
+air flow meter
+air fuel ratio meter
+air speed indicator
+airspeed indicator
+alarm sensor
+altimeter
+analog image processing
+anemometer
+atomic force microscopy
+atomic gravitational wave interferometric sensor
+attitude control 
+attitude indicator
+auxanometer
+back illuminated sensor
+barograph
+barometer
+bedwetting alarm
+bhangmeter
+bimetallic strip
+biochip
+biosensor
+blind spot monitor
+bolometer
+boost gauge
+bourdon gauge
+breathalyzer
+bubble chamber
+calorimeter
+capacitance probe
+capacitive displacement sensor
+capacitive sensing
+carbon dioxide sensor
+carbon monoxide detector
+carbon paste electrode
+catadioptric sensor
+catalytic bead sensor
+ceilometer
+charge coupled device
+chemical field effect transistor
+chemoreceptor
+cloud chamber
+compressive sensing
+contact image sensor
+crankshaft position sensor
+cryogenic particle detectors
+curb feeler
+current sensor
+defect detector
+depth gauge
+dew warning
+diffusion tensor imaging
+digital holography
+digital sensors
+displacement receiver
+doppler radar
+electrochemical gas sensor
+electrolyte insulator semiconductor sensor
+electromechanical film
+electronic nose
+electronic tongue
+electro optical sensor
+electroscope
+engine control unit
+engine coolant temperature sensor
+exhaust gas temperature gauge
+fabry p%c3%a9rot interferometer
+fine guidance sensor
+fish counter
+fisheries acoustics
+flame detection
+flame detector
+flat panel detector
+flow sensor
+fluorescent chloride sensors
+fluxgate compass
+force gauge
+free fall sensor
+frequency domain sensor
+functional magnetic resonance imaging
+galvanometer
+gardon gauge
+gas detector
+gas meter
+geiger counter
+geophone
+glass break detector
+golay cell
+gravimeter
+ground penetrating radar
+gyroscope
+gyroscopic sensor
+hall effect sensor
+hall probe
+heartbeat sensor
+heat flux sensor
+holographic sensor
+hook gauge evaporimeter
+hot filament ionization gauge
+humistor
+hydrocarbon dew point
+hydrogen sensor
+hydrogen sulfide sensor
+hydrometer
+hydrophone
+hygrometer
+hyperspectral imaging
+image sensor
+image sensor format
+inclinometer
+inductive sensor
+inertial navigation system
+inertial reference unit
+infrared
+infra red
+infrared point sensor
+infrared thermometer
+integrated circuit piezoelectric sensor
+intelligent sensor
+ionization gauge
+ion selective electrode
+iris 
+kinetic inductance detector
+lab on a chip
+lace sensor
+laser beam profiler
+laser rangefinder
+laser surface velocimeter
+leaf sensor
+led as light sensor
+level sensor
+lidar
+light addressable potentiometric sensor
+linear encoder
+linear variable differential transformer
+liquid capacitive inclinometers
+littoral airborne sensor/hyperspectral
+load cell
+lorros
+machine vision
+magnetic anomaly detector
+magnetic compass
+magnetic level gauge
+magnetic resonance imaging
+magnetometer
+map sensor
+mass flow sensor
+mcleod gauge
+mems magnetic field sensor
+metal detector
+mhd sensor
+microbolometer
+microelectromechanical systems
+microphone
+microwave chemistry sensor
+microwave radiometer
+millimeter wave scanner
+moire deflectometry
+molecular sensor
+motion detector
+nanosensor
+nano tetherball sensor
+net radiometer
+neutron detection
+nichols radiometer
+nitrogen oxide sensor
+nondispersive infrared sensor
+nuclear density gauge
+occupancy sensor
+odometer
+olfactometer
+omnidirectional camera
+omniview technology
+optical coherence tomography
+optical fiber
+optical position sensor
+optode
+oscillating u tube
+oxygen sensor
+ozone monitor
+parking sensors
+particle detector
+passive infrared sensor
+permanent downhole gauge
+phase unwrapping
+ph glass electrode
+photodetector
+photodiode
+photoelasticity
+photoelectric sensor
+photoionization detector
+photomultiplier
+photoresistor
+photoswitch
+phototransistor
+phototube
+piezoelectric accelerometer
+piezoelectric sensor
+piezometer
+pirani gauge
+planar hall sensor
+position sensitive device
+position sensor
+positron emission tomography
+potentiometric sensor
+pressure gauge
+pressure sensor
+proximity sensor
+psychrometer
+push broom scanner
+pyranometer
+pyrgeometer
+pyrometer
+quantization 
+quantum sensor
+quartz thermometer
+radar
+radar gun
+radar tracker
+radio direction finder
+rain gauge
+rain sensor
+range imaging
+rate sensor
+redox electrode
+reed switch
+resistance temperature detector
+resistance thermometer
+ring laser gyroscope
+rotary encoder
+rotary variable differential transformer
+scanning squid microscope
+scintillation counter
+scintillator
+scintillometer
+seismometer
+seismometers
+selsyn
+sensor array
+sensor fusion
+sensor grid
+sensor node
+shack hartmann
+shack hartmann wavefront sensor
+silicon bandgap temperature sensor
+single photon avalanche diode
+single photon emission computed tomography
+smartdust
+smoke detector
+snotel
+snow gauge
+soft sensor
+soil moisture sensor
+sonar
+special sensor microwave/imager
+speedometer
+speed sensor
+squid
+ssies
+ssmis
+staring array
+strain gauge
+stream gauge
+structured light 3d scanner
+stud finder
+sudden motion sensor
+sun sensor
+superconducting nanowire single photon detector
+superconducting quantum interference device
+synthetic aperture radar
+tachometer
+tactile sensor
+temperature gauge
+test light
+thermistor
+thermocouple
+thermometer
+thin film thickness monitor
+throttle position sensor
+tide gauge
+tilt sensor
+time of flight camera
+time pressure gauge
+tire pressure monitoring system
+torque converter
+torque sensor
+touch switch
+transducer
+transition edge sensor
+transmission control unit
+triangulation sensor
+tridar
+tristimulus colorimeter
+turn coordinator
+ultrasonic sensor
+ultrasonic thickness gauge
+unattended ground sensors
+variable reluctance sensor
+variometer
+velocity receiver
+vibrating structure gyroscope
+video sensor
+video sensor technology
+viscometer
+visible light photon counter
+visual sensor network
+voltage detector
+water meter
+water metering
+water sensor
+wavefront sensor
+wheatstone bridge
+wheel speed sensor
+wire chamber
+wired glove
+wireless sensor network
+yaw rate sensor
+zinc oxide nanorod sensor

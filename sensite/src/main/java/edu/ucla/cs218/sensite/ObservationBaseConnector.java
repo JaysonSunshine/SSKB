@@ -113,7 +113,7 @@ public class ObservationBaseConnector {
 		System.out.println(query);
 		
 		// Execute the query and get a handle to the returned result set
-		DBCursor cursor = db.getCollection("Data").find(query);
+		DBCursor cursor = db.getCollection("data").find(query);
 		
 		// Setup a JSON Array that will contain the result set as JSON objects
 		JSONArray outArray = new JSONArray();

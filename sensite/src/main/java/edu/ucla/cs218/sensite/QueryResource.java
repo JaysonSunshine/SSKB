@@ -47,7 +47,7 @@ public class QueryResource {
 			date 				= format.parse(time1Reference);
 			long timestampLong 		= date.getTime();
 			Timestamp timestamp		= new Timestamp(timestampLong);
-			HashMap<String, Double> sensorTypes = knowledgeBase.getSensors(phenomenaReference);
+			HashMap<String, Integer> sensorTypes = knowledgeBase.getSensors(phenomenaReference);
 			JSONObject infoObjects = sensorBase.getSensorData(new ArrayList<String>(sensorTypes.keySet()), longitude, latitude, timestamp);
                         for (int i = 0; i < ((JSONArray)infoObjects.get("Informations")).length(); i++) {
                             JSONObject thisObj = ((JSONArray)infoObjects.get("Informations")).getJSONObject(i);

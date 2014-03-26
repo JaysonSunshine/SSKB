@@ -1,0 +1,234 @@
+absorption (acoustics)
+speed of sound
+atomic mass
+atomic number
+atomic weight
+isotope
+corrosion
+hygroscopy
+ph
+reactivity (chemistry)
+bet theory
+surface energy
+surface tension
+dielectric constant
+dielectric strength
+electrical conductivity
+permeability (electromagnetism)
+permittivity
+piezoelectric
+seebeck coefficient
+embodied energy
+embodied water
+curie point
+diamagnetism
+hysteresis
+permeability (electromagnetism)
+castability
+extrusion
+hardness
+machinability rating
+compressive strength
+ductility
+fatigue limit
+flexural modulus
+flexural strength
+fracture toughness
+hardness
+plasticity (physics)
+poisson%27s ratio
+resilience
+shear modulus
+shear strain
+shear strength
+specific modulus
+specific strength
+specific weight
+tensile strength
+yield strength
+young%27s modulus
+coefficient of friction
+coefficient of restitution
+physics
+color
+luminosity
+photosensitivity
+reflectivity
+refractive index
+scattering
+transmittance
+neutron cross-section
+specific activity
+autoignition temperature
+binary phase diagram
+boiling point
+coefficient of thermal expansion
+critical temperature
+curie point
+emissivity
+eutectic point
+flammability
+flash point
+glass transition temperature
+heat of fusion
+heat of vaporization
+inversion temperature
+melting point
+phase diagram
+pyrophoricity
+solidus (chemistry)
+specific heat
+thermal conductivity
+thermal diffusivity
+thermal expansion
+seebeck coefficient
+triple point
+vapor pressure
+vicat softening point
+chemical property
+physical property
+supervenience
+thermodynamic properties
+air mass
+anticyclone
+arctic cyclone
+ball lightning
+cloud
+crow instability
+derecho
+diamond dust
+drought
+dust devil
+dust storm
+extratropical cyclone
+foehn wind
+hail
+halo (optical phenomenon)
+heat wave
+hurricane
+ice pellets
+indian summer
+kelvin-helmholtz instability
+lake effect snow
+light pillar
+lightning
+mesocyclone
+morning glory cloud
+novaya zemlya effect
+rain
+rain and snow mixed
+rainbow
+raining animals
+snow
+squall
+st. elmo%27s fire
+subtropical cyclone
+sun dog
+sun shower
+supercell
+temperature inversion
+thunder
+thundersnow
+thunderstorm
+tornado
+tropical storm
+weather front
+wind
+zud
+severe weather
+absorption (chemistry)
+absorption (electromagnetic radiation)
+albedo
+angular momentum
+area
+brittleness
+boiling point
+capacitance
+color
+concentration
+density
+dielectric
+ductility
+distribution function
+efficacy
+elasticity (physics)
+electric charge
+electrical conductivity
+electrical impedance
+electric field
+electric potential
+emission (electromagnetic radiation)
+flow rate
+fluidity
+frequency
+hardness
+inductance
+intrinsic impedance
+intensity (physics)
+irradiance
+length
+absolute location
+luminance
+luminescence
+lustre (mineralogy)
+malleability
+magnetic field
+magnetic flux
+mass
+melting point
+magnetic moment
+momentum
+opacity (optics)
+permeability (electromagnetism)
+permittivity
+plasticity (physics)
+pressure
+radiance
+solubility
+specific heat
+resistivity
+reflectivity
+refractive index
+rotation
+strength of materials
+stiffness
+temperature
+tension (physics)
+thermal conductivity
+velocity
+viscosity
+volume
+wave impedance
+chemical property
+physical quantity
+list of materials properties
+physical test
+test method
+elasticity (physics)
+hardness
+heat conductivity
+Length
+Metre
+Time
+Second
+Mass
+Kilogram
+Temperature
+Kelvin
+Matter
+Mole_(unit)
+Electric_current
+Ampere
+Luminous_intensity
+Candela
+Angle
+Radian
+Solid_angle
+Steradian
+Position_(vector)
+Vector_area
+Tangent
+Time_derivative
+Scalar_field
+Moment_(physics)
+Potential_energy
