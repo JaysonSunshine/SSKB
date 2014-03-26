@@ -1,7 +1,7 @@
 Phenomena Generator version v1.0
 joon812@gmail.com Sung Baek
 
-steps/descriptions:
+ steps/descriptions:
 
 1.  Pass html file into web.sh 
 2.  web.sh will extract wikipedia objects
