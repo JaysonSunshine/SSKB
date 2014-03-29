@@ -1,5 +1,7 @@
 package edu.ucla.cs218.crawler;
 
+import almonds.ParseObject;
+import almonds.ParseQuery;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -12,13 +14,10 @@ import java.util.List;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
-<<<<<<< HEAD
-=======
 import com.mongodb.*;
 import database.parse.tables.ParsePhenomena;
 import database.parse.tables.ParseSensor;
 import database.parse.util.DBGlobals;
->>>>>>> ce33b2bde7bd23b5bbb0f39b7604da97064b6cc6
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -26,13 +25,6 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.ucla.cs218.crawler.GoogleResults.Result;
-<<<<<<< HEAD
-import edu.ucla.cs218.data.DataHelper;
-
-public class Controller {
-	
-	private static GoogleResults getGoogleResults(String phenomenon)
-=======
 import edu.ucla.cs218.crawler.MatchFinder;
 import edu.ucla.cs218.sensite.JSONParser;
 import edu.ucla.cs218.sensite.MongoConnector;
@@ -61,69 +53,49 @@ public class Controller {
     
     //Used to get google results
     private static GoogleResults getGoogleResults(String phenomenon)
->>>>>>> ce33b2bde7bd23b5bbb0f39b7604da97064b6cc6
     {
-    	String google = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=";
+        //NOTE: &start=10 --- there's a start paramater that controls paging of search results
+    	String googleURL = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=";
         String search = phenomenon;
         String charset = "UTF-8";
 
         URL url;
         Reader reader;
         GoogleResults results;
-		try {
-			url = new URL(google + URLEncoder.encode(search, charset));
-			reader = new InputStreamReader(url.openStream(), charset);
-			results = new Gson().fromJson(reader, GoogleResults.class);
-	        return results;
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+        try {
+            url = new URL(googleURL + URLEncoder.encode(search, charset));
+            reader = new InputStreamReader(url.openStream(), charset);
+            results = new Gson().fromJson(reader, GoogleResults.class);
+        return results;
+        } catch (MalformedURLException e) {
+                e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
+        return null;
     }
 	
 	private static void setCrawlerConfig(List<String> urlsToSearch) throws Exception
 	{
-		String crawlStorageFolder 	= "data/crawl/root";
-        int numberOfCrawlers 		= 10;
-        int maxDepthOfCrawling 		= 1;
-//        int maxPagesToFetch			= 100;
+            String crawlStorageFolder 	= "data/crawl/root";
+            int numberOfCrawlers 		= 10;//Crawling 10 pages at a time cause thats how many search results return
+            int maxDepthOfCrawling 		= 1;//Crawl only the top webpage
+    //        int maxPagesToFetch			= 100;
         
-        CrawlConfig config = new CrawlConfig();
-        config.setCrawlStorageFolder(crawlStorageFolder);
-        config.setMaxDepthOfCrawling(maxDepthOfCrawling);
-//        config.setMaxPagesToFetch(maxPagesToFetch);
-        /*
-         * Instantiate the controller for this crawl.
-         */
-        PageFetcher pageFetcher = new PageFetcher(config);
-        RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
-        RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+            CrawlConfig config = new CrawlConfig();
+            config.setCrawlStorageFolder(crawlStorageFolder);
+            config.setMaxDepthOfCrawling(maxDepthOfCrawling);
+    //        config.setMaxPagesToFetch(maxPagesToFetch);
+            /*
+             * Instantiate the controller for this crawl.
+             */
+            PageFetcher pageFetcher = new PageFetcher(config);
+            RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+            RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+            CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
 
-<<<<<<< HEAD
-        /*
-         * For each crawl, you need to add some seed urls. These are the first
-         * URLs that are fetched and then the crawler starts following links
-         * which are found in these pages
-         */
-        for (String urlToSearch : urlsToSearch)
-        {
-        	if (!urlToSearch.toLowerCase().contains("en.wikipedia.org".toLowerCase())){
-        		controller.addSeed(urlToSearch);
-        	}else{
-        		//crawler doesn't work on wikipedia
-        	}
-        }
-        /*
-         * Start the crawl. This is a blocking operation, meaning that your code
-         * will reach the line after this only when crawling is finished.
-         */
-        controller.start(Crawler.class, numberOfCrawlers); 
-=======
             /*
              * For each crawl, you need to add some seed urls. These are the first
              * URLs that are fetched and then the crawler starts following links
@@ -142,18 +114,11 @@ public class Controller {
              * will reach the line after this only when crawling is finished.
              */
             controller.start(Crawler.class, numberOfCrawlers); 
->>>>>>> ce33b2bde7bd23b5bbb0f39b7604da97064b6cc6
 	}
 	
+    static String []searchTerms = {"? measurement instrument", "how to measure ?"};
     public static void main(String[] args) throws Exception {
     	
-<<<<<<< HEAD
-    	List<String> phenomenons = DataHelper.getList(DataHelper.PHENOMENONS_LIST);
-    	for (String phenomena : phenomenons)
-    	{
-    		System.out.println("Phenomena: "+phenomena);
-    		GoogleResults results = getGoogleResults(phenomena);
-=======
         /*
         PARSE HANDLER SETUP HERE
         */
@@ -197,26 +162,20 @@ public class Controller {
             for(String searchterm : searchTerms ){
                 System.out.println("Search Term: "+searchterm.replace("?", phenomenon));
     		GoogleResults results = getGoogleResults(searchterm.replace("?", phenomenon));
->>>>>>> ce33b2bde7bd23b5bbb0f39b7604da97064b6cc6
     		List<Result> resultList = results.getResponseData().getResults();
+                
     		List<String> urlsToSearch = new ArrayList<String>();
-    		
-//    		String wikiURL = "http://en.wikipedia.org/wiki/" + phenomena;
-//    		System.out.println("Searching URL: "+wikiURL);
-//    		urlsToSearch.add(wikiURL);
     		for (Result result : resultList)
     		{
-                String urlToSearch 		= result.getUrl();
-                System.out.println("Searching URL: "+urlToSearch);
-                urlsToSearch.add(urlToSearch);
+                    String urlToSearch 	= result.getUrl();
+                    System.out.println("Searching URL: "+urlToSearch);
+                    urlsToSearch.add(urlToSearch);
     		}
+                //Start the crawlers
+                setCrawlerConfig(urlsToSearch);
+            }
     		
-<<<<<<< HEAD
-    		setCrawlerConfig(urlsToSearch);
-    	}   
-=======
     	}
         
->>>>>>> ce33b2bde7bd23b5bbb0f39b7604da97064b6cc6
     }
 }
